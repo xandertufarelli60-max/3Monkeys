@@ -1,0 +1,686 @@
+@import "tailwindcss";
+
+/* ========================================
+   3MONKEYSFILM - CINEMATIC DESIGN SYSTEM
+   ======================================== */
+
+/* --- CSS VARIABLES: DUAL SOUL --- */
+:root {
+  /* CINEMA MODE (Light - Default) */
+  --background: #F9F9F7;
+  --foreground: #0A0A0A;
+  --accent: #00754B;
+  --accent-glow: rgba(0, 117, 75, 0.4);
+  --muted: #6B7280;
+  --border: #E5E7EB;
+
+  /* Typography — unified to Space Mono */
+  --font-display: 'Space Mono', monospace;
+  --font-body: 'Space Mono', monospace;
+
+  /* Animation */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.8s var(--ease-out-expo);
+  --transition-medium: 0.4s var(--ease-out-expo);
+  --transition-fast: 0.2s ease-out;
+}
+
+/* TECH MODE (Dark) */
+[data-theme="dark"],
+.dark-mode {
+  --background: #050505;
+  --foreground: #FFFFFF;
+  --muted: #888888;
+  --border: #2A2A2A;
+}
+
+/* --- TAILWIND THEME INTEGRATION --- */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-glow: var(--accent-glow);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+/* --- BASE STYLES --- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  transition: background var(--transition-medium), color var(--transition-medium);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- TYPOGRAPHY --- */
+h1,
+h2,
+h3,
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+h1 {
+  font-size: clamp(3rem, 10vw, 8rem);
+}
+
+h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.mono {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* --- CUSTOM CURSOR --- */
+.cursor-custom {
+  cursor: none;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
+  mix-blend-mode: difference;
+}
+
+.cursor-dot.hover {
+  width: 60px;
+  height: 60px;
+  background: var(--accent-glow);
+}
+
+/* --- SHUTTER TRANSITION --- */
+.shutter-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+.shutter-blade {
+  position: absolute;
+  background: #000;
+  transition: transform 0.5s var(--ease-out-expo);
+}
+
+.shutter-blade.top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  transform: translateY(-100%);
+}
+
+.shutter-blade.bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  transform: translateY(100%);
+}
+
+.shutter-active .shutter-blade.top {
+  transform: translateY(0);
+}
+
+.shutter-active .shutter-blade.bottom {
+  transform: translateY(0);
+}
+
+/* --- DARK GLOW EFFECT --- */
+.dark-glow {
+  position: relative;
+}
+
+.dark-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: var(--accent);
+  opacity: 0;
+  filter: blur(20px);
+  z-index: -1;
+  transition: opacity var(--transition-medium);
+}
+
+.dark-glow:hover::before {
+  opacity: 0.6;
+}
+
+/* --- FILM GRAIN OVERLAY --- */
+.film-grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9997;
+}
+
+/* --- SCROLL REVEAL ANIMATION --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- STAGGER ANIMATION FOR GRIDS --- */
+.reveal-stagger>* {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.reveal-stagger.visible>*:nth-child(1) {
+  transition-delay: 0ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-stagger.visible>*:nth-child(2) {
+  transition-delay: 150ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-stagger.visible>*:nth-child(3) {
+  transition-delay: 300ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-stagger.visible>*:nth-child(4) {
+  transition-delay: 450ms;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Scale variant for Produzioni */
+.reveal-scale>* {
+  opacity: 0;
+  transform: translateY(20px) scale(0.97);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.reveal-scale.visible>*:nth-child(1) {
+  transition-delay: 0ms;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.reveal-scale.visible>*:nth-child(2) {
+  transition-delay: 200ms;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.reveal-scale.visible>*:nth-child(3) {
+  transition-delay: 400ms;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Slide-up for CTA section */
+.reveal-slideup {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo);
+}
+
+.reveal-slideup.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- BUTTON STYLES --- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px var(--accent-glow);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: transparent;
+  color: var(--foreground);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* --- ACCESSIBILITY --- */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus visible for keyboard nav */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   TV PRODUCTION ANIMATIONS
+   ======================================== */
+
+/* --- TV SCANLINES OVERLAY (Global) --- */
+.scanlines::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(0deg,
+      rgba(0, 0, 0, 0.1),
+      rgba(0, 0, 0, 0.1) 1px,
+      transparent 1px,
+      transparent 2px);
+  pointer-events: none;
+  z-index: 9996;
+  opacity: 0.03;
+}
+
+/* --- TV TURN-ON EFFECT (Page Load) --- */
+@keyframes tv-turn-on {
+  0% {
+    transform: scaleY(0.001) scaleX(0.2);
+    opacity: 0;
+    filter: brightness(0);
+  }
+
+  30% {
+    transform: scaleY(0.01) scaleX(0.5);
+    opacity: 1;
+    filter: brightness(10);
+  }
+
+  50% {
+    transform: scaleY(0.01) scaleX(1);
+    opacity: 1;
+    filter: brightness(0.5);
+  }
+
+  70% {
+    transform: scaleY(0.5) scaleX(1);
+    filter: brightness(1.2);
+  }
+
+  100% {
+    transform: scaleY(1) scaleX(1);
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+.tv-on {
+  animation: tv-turn-on 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- STATIC NOISE EFFECT --- */
+@keyframes static-noise {
+
+  0%,
+  100% {
+    background-position: 0 0;
+  }
+
+  10% {
+    background-position: -5% -5%;
+  }
+
+  20% {
+    background-position: -10% 5%;
+  }
+
+  30% {
+    background-position: 5% -10%;
+  }
+
+  40% {
+    background-position: -5% 15%;
+  }
+
+  50% {
+    background-position: -10% 5%;
+  }
+
+  60% {
+    background-position: 15% 0;
+  }
+
+  70% {
+    background-position: 0 10%;
+  }
+
+  80% {
+    background-position: -15% 0;
+  }
+
+  90% {
+    background-position: 10% 5%;
+  }
+}
+
+.static-noise {
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 9998;
+  animation: static-noise 0.3s steps(10) infinite;
+  mix-blend-mode: overlay;
+}
+
+/* --- CHANNEL CHANGE FLASH --- */
+@keyframes channel-flash {
+  0% {
+    filter: brightness(3) saturate(0) contrast(2);
+    transform: scale(1.02);
+  }
+
+  30% {
+    filter: brightness(0.3) saturate(0.5) sepia(0.5);
+  }
+
+  100% {
+    filter: none;
+    transform: scale(1);
+  }
+}
+
+.channel-change {
+  animation: channel-flash 0.4s ease-out forwards;
+}
+
+/* --- ENHANCED CARD HOVER (TV Monitor Style) --- */
+.card-tv-hover {
+  position: relative;
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.card-tv-hover:hover {
+  transform: scale(1.02);
+  box-shadow:
+    0 0 20px rgba(0, 117, 75, 0.3),
+    0 0 40px rgba(0, 117, 75, 0.1),
+    inset 0 0 60px rgba(0, 117, 75, 0.05);
+}
+
+.card-tv-hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+      rgba(0, 117, 75, 0) 0%,
+      rgba(0, 117, 75, 0.05) 100%);
+  opacity: 0;
+  transition: opacity var(--transition-medium);
+  pointer-events: none;
+}
+
+.card-tv-hover:hover::before {
+  opacity: 1;
+}
+
+/* --- TELETEXT STYLE LABELS --- */
+.teletext {
+  font-family: var(--font-body);
+  background: var(--accent);
+  color: white;
+  padding: 2px 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: inline-block;
+}
+
+/* --- MARQUEE INFINITE SCROLL --- */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: inline-flex;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+
+/* --- SERVICE CARD HIGHLIGHT (Production) --- */
+.service-highlight {
+  border: 2px solid var(--accent);
+  background: rgba(0, 117, 75, 0.05);
+  position: relative;
+}
+
+.service-highlight::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: var(--accent);
+  opacity: 0;
+  filter: blur(20px);
+  z-index: -1;
+  transition: opacity var(--transition-medium);
+}
+
+.service-highlight:hover::after {
+  opacity: 0.3;
+}
+
+/* ========================================
+   PRODUZIONI TELEVISIVE SECTION
+   ======================================== */
+
+/* --- PRODUZIONI CARD --- */
+.produzioni-card {
+  position: relative;
+  transition: transform var(--transition-medium);
+}
+
+.produzioni-card:hover {
+  transform: translateY(-4px);
+}
+
+/* --- PRODUZIONI SCANLINE (hover overlay) --- */
+.produzioni-scanline {
+  background: repeating-linear-gradient(0deg,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 3px);
+  mix-blend-mode: overlay;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .produzioni-card:hover {
+    transform: none;
+  }
+}
+
+/* ========================================
+   SPLASH SCREEN
+   ======================================== */
+
+.splash-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-bg {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Subtle film grain on splash */
+.splash-grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.06;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* Centered logo wrapper */
+.splash-logo-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  z-index: 2;
+}
+
+/* Logo image */
+.splash-logo {
+  width: clamp(200px, 40vw, 360px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 40px rgba(0, 117, 75, 0.3));
+}
+
+/* Glow ring behind logo */
+.splash-glow-ring {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+      rgba(0, 117, 75, 0.15) 0%,
+      rgba(0, 117, 75, 0.05) 40%,
+      transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Green accent line */
+.splash-accent-line {
+  width: 80px;
+  height: 2px;
+  background: var(--accent, #00754B);
+  transform-origin: center;
+  border-radius: 1px;
+  box-shadow: 0 0 12px rgba(0, 117, 75, 0.5);
+}
+
+/* Scanline sweep */
+.splash-scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(180deg,
+      transparent,
+      rgba(0, 117, 75, 0.25),
+      transparent);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+  .splash-overlay,
+  .splash-logo-container,
+  .splash-glow-ring,
+  .splash-accent-line,
+  .splash-scanline {
+    animation: none !important;
+    transition: none !important;
+  }
+}
