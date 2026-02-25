@@ -42,7 +42,8 @@ const teamMembers: TeamMember[] = [
         name: 'Marco De Martino',
         role: 'Drone / Filmmaker',
         bio: 'Filmmaker e operatore drone certificato. Specializzato in riprese aeree cinematografiche e prospettive uniche che aggiungono profondità ad ogni produzione.',
-        image: '/images/team/marco-demartino.jpg',
+        image: '/images/team/Marco-demartino-2.jpeg',
+        objectPosition: '75% center',
         links: {},
     },
     {

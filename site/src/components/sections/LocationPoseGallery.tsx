@@ -1,19 +1,29 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
 import { salaPoseImages } from '@/data/noleggio';
-import { X } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function LocationPoseGallery() {
     const ref = useRef<HTMLDivElement>(null);
+    const scrollRef = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true, margin: '-100px' });
     const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
+    const scroll = useCallback((direction: 'left' | 'right') => {
+        if (!scrollRef.current) return;
+        const scrollAmount = 400;
+        scrollRef.current.scrollBy({
+            left: direction === 'left' ? -scrollAmount : scrollAmount,
+            behavior: 'smooth',
+        });
+    }, []);
+
     return (
-        <section className="py-24 px-6 bg-[#050505] dark-mode" ref={ref}>
-            <div className="max-w-7xl mx-auto">
+        <section className="py-24 bg-[#050505] dark-mode" ref={ref}>
+            <div className="max-w-7xl mx-auto px-6">
                 {/* Section Header */}
                 <motion.div
                     className="text-center mb-16"
@@ -48,38 +58,74 @@ export default function LocationPoseGallery() {
                         </span>
                     ))}
                 </motion.div>
+            </div>
 
-                {/* Gallery Grid */}
-                <div className={`grid gap-4 ${salaPoseImages.length <= 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'}`}>
+            {/* Scrollable Gallery */}
+            <motion.div
+                className="relative group/gallery"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.3 }}
+            >
+                {/* Scroll Arrows */}
+                <button
+                    onClick={() => scroll('left')}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-[#00754B]/80 hover:border-[#00754B] transition-all duration-300 opacity-0 group-hover/gallery:opacity-100"
+                    aria-label="Scorri a sinistra"
+                >
+                    <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                    onClick={() => scroll('right')}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-[#00754B]/80 hover:border-[#00754B] transition-all duration-300 opacity-0 group-hover/gallery:opacity-100"
+                    aria-label="Scorri a destra"
+                >
+                    <ChevronRight className="w-6 h-6" />
+                </button>
+
+                {/* Scrollable Container */}
+                <div
+                    ref={scrollRef}
+                    className="flex gap-4 overflow-x-auto px-6 pb-4 scrollbar-hide"
+                    style={{
+                        scrollSnapType: 'x mandatory',
+                        WebkitOverflowScrolling: 'touch',
+                        scrollbarWidth: 'none',
+                        msOverflowStyle: 'none',
+                    }}
+                >
                     {salaPoseImages.map((image, index) => (
-                        <motion.div
+                        <div
                             key={index}
-                            className={`relative overflow-hidden rounded-lg cursor-pointer group ${salaPoseImages.length > 2 && index === 0 ? 'col-span-2 row-span-2' : ''
-                                }`}
-                            style={{ aspectRatio: salaPoseImages.length > 2 && index === 0 ? '1' : '16/9' }}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={isInView ? { opacity: 1, y: 0 } : {}}
-                            transition={{ duration: 0.5, delay: 0.1 * index }}
+                            className="relative flex-shrink-0 h-[350px] md:h-[450px] rounded-lg overflow-hidden cursor-pointer group"
+                            style={{
+                                width: 'auto',
+                                aspectRatio: '16/10',
+                                scrollSnapAlign: 'start',
+                            }}
                             onClick={() => setLightboxIndex(index)}
                         >
                             <Image
                                 src={image.src}
                                 alt={image.alt}
                                 fill
-                                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                sizes={index === 0 ? '(max-width: 768px) 100vw, 50vw' : '(max-width: 768px) 50vw, 25vw'}
+                                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                sizes="(max-width: 768px) 80vw, 40vw"
                             />
                             {/* Hover Overlay */}
-                            <div className="absolute inset-0 bg-[#00754B]/0 group-hover:bg-[#00754B]/20 transition-colors duration-500" />
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
-                                <span className="mono text-xs text-white/90 bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm">
-                                    {image.alt}
-                                </span>
-                            </div>
-                        </motion.div>
+                            <div className="absolute inset-0 bg-[#00754B]/0 group-hover:bg-[#00754B]/15 transition-colors duration-500" />
+                        </div>
                     ))}
                 </div>
-            </div>
+
+                {/* Scroll Hint Bar */}
+                <div className="flex justify-center mt-6 px-6">
+                    <div className="flex items-center gap-2">
+                        <span className="mono text-xs text-[#888]/60 tracking-widest">SCORRI PER ESPLORARE</span>
+                        <ChevronRight className="w-3 h-3 text-[#888]/60" />
+                    </div>
+                </div>
+            </motion.div>
 
             {/* Lightbox */}
             {lightboxIndex !== null && (
@@ -107,22 +153,22 @@ export default function LocationPoseGallery() {
                     </div>
                     {/* Navigation arrows */}
                     <button
-                        className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl transition-colors"
+                        className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/70 hover:text-white hover:bg-[#00754B]/80 transition-all"
                         onClick={(e) => {
                             e.stopPropagation();
                             setLightboxIndex((prev) => (prev! > 0 ? prev! - 1 : salaPoseImages.length - 1));
                         }}
                     >
-                        ‹
+                        <ChevronLeft className="w-6 h-6" />
                     </button>
                     <button
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl transition-colors"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/70 hover:text-white hover:bg-[#00754B]/80 transition-all"
                         onClick={(e) => {
                             e.stopPropagation();
                             setLightboxIndex((prev) => (prev! < salaPoseImages.length - 1 ? prev! + 1 : 0));
                         }}
                     >
-                        ›
+                        <ChevronRight className="w-6 h-6" />
                     </button>
                 </motion.div>
             )}

@@ -1,6 +1,5 @@
 import HeroSection from "@/components/sections/HeroSection";
 import PartnersSection from "@/components/sections/PartnersSection";
-import TestimonialSection from "@/components/sections/TestimonialSection";
 import FAQSection from "@/components/sections/FAQSection";
 import FooterNewsletter from "@/components/sections/FooterNewsletter";
 import {
@@ -43,7 +42,7 @@ const services = [
 
 // Noleggio features
 const noleggioFeatures = [
-  { icon: Building2, name: "Sala Pose" },
+  { icon: Building2, name: "Studio" },
   { icon: Camera, name: "Camera & Ottiche" },
   { icon: Lightbulb, name: "Luci LED & Fresnel" },
   { icon: Settings, name: "Grip & Supporti" },
@@ -57,7 +56,6 @@ export default function Home() {
       {/* Hero Section */}
       <HeroSection
         headline='CRAFTING VISUAL STORIES'
-        subheadline="Production Company & Service Tecnico"
       />
 
 
@@ -179,8 +177,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonial */}
-      <TestimonialSection />
+
+
 
       {/* Noleggio Teaser */}
       <section className="py-24 px-6 bg-[#050505] dark-mode">
@@ -243,15 +241,22 @@ export default function Home() {
             {/* Team Preview */}
             <div className="flex flex-wrap justify-center gap-6">
               {[
-                { name: "Mario", role: "DOP / Steadicam" },
-                { name: "Carlo", role: "Director" },
-                { name: "Marco", role: "Drone" },
-                { name: "Massimo", role: "Drone" },
-                { name: "Tiziano", role: "Head Tech" },
+                { name: "Mario", role: "Steadicam", image: "/images/team/mario-rotoli.jpg", objectPosition: "center 30%" },
+                { name: "Carlo", role: "Director", image: "/images/team/carlo-boni.jpg", objectPosition: "70% center" },
+                { name: "Marco", role: "Drone", image: "/images/team/Marco-demartino-2.jpeg", objectPosition: "75% center" },
+                { name: "Massimo", role: "Drone", image: "/images/team/massimo-ruggini.jpg", objectPosition: "center" },
+                { name: "Tiziano", role: "Head Tech", image: "/images/team/tiziano.jpg", objectPosition: "center" },
               ].map((member, i) => (
                 <div key={i} className="text-center group">
-                  <div className="w-20 h-20 rounded-full bg-[var(--border)] flex items-center justify-center mb-3 group-hover:ring-2 ring-[#00754B] ring-offset-2 transition-all">
-                    <span className="mono text-xl text-[var(--muted)]">{member.name[0]}</span>
+                  <div className="relative w-20 h-20 rounded-full overflow-hidden mb-3 group-hover:ring-2 ring-[#00754B] ring-offset-2 transition-all">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                      sizes="80px"
+                      style={{ objectPosition: member.objectPosition }}
+                    />
                   </div>
                   <p className="font-bold text-sm">{member.name}</p>
                   <p className="mono text-xs text-[var(--muted)]">

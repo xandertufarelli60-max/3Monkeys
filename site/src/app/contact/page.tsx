@@ -6,20 +6,48 @@ import { Send, MapPin, Phone, Mail, Clock, ArrowRight, CheckCircle } from 'lucid
 
 type ContactType = 'production' | 'rental';
 
+function sanitizeInput(input: string, maxLength: number = 500): string {
+    return input.trim().replace(/[\r\n]{3,}/g, '\n\n').slice(0, maxLength);
+}
+
 export default function ContactPage() {
     const [contactType, setContactType] = useState<ContactType>('production');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const CONTACT_EMAIL = '3monkeysfilm@gmail.com';
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsSubmitting(true);
+        const form = e.currentTarget;
+        const formData = new FormData(form);
 
-        // Simulate form submission
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        // Anti-bot honeypot check
+        const honeypot = formData.get('website') as string;
+        if (honeypot) return;
 
-        setIsSubmitting(false);
-        setIsSubmitted(true);
+        const name = sanitizeInput(formData.get('name') as string || '', 100);
+        const email = sanitizeInput(formData.get('email') as string || '', 150);
+        const message = sanitizeInput(formData.get('message') as string || '', 2000);
+
+        let subject = '';
+        let body = '';
+
+        if (contactType === 'production') {
+            const company = sanitizeInput(formData.get('company') as string || '', 150);
+            const project = sanitizeInput(formData.get('project') as string || '', 100);
+            subject = `Richiesta Produzione - ${name}`;
+            body = `Nome: ${name}\nEmail: ${email}\nAzienda: ${company}\nTipo Progetto: ${project}\n\nMessaggio:\n${message}`;
+        } else {
+            const projectName = sanitizeInput(formData.get('project-name') as string || '', 200);
+            const dates = sanitizeInput(formData.get('dates') as string || '', 100);
+            const budget = sanitizeInput(formData.get('budget') as string || '', 50);
+            subject = `Richiesta Preventivo Tecnico - ${name}`;
+            body = `Nome: ${name}\nEmail: ${email}\nProgetto: ${projectName}\nDate: ${dates}\nBudget: ${budget}\n\nMessaggio:\n${message}`;
+        }
+
+        const mailtoUrl = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailtoUrl;
     };
 
     return (
@@ -105,6 +133,15 @@ export default function ContactPage() {
                                 </div>
                             ) : (
                                 <form onSubmit={handleSubmit} className="space-y-6">
+                                    {/* Honeypot anti-spam field */}
+                                    <input
+                                        type="text"
+                                        name="website"
+                                        tabIndex={-1}
+                                        autoComplete="off"
+                                        style={{ position: 'absolute', left: '-9999px', opacity: 0 }}
+                                        aria-hidden="true"
+                                    />
                                     <div className="grid sm:grid-cols-2 gap-6">
                                         <div>
                                             <label htmlFor="name" className="mono text-xs text-[var(--muted)] block mb-2">
@@ -115,6 +152,7 @@ export default function ContactPage() {
                                                 id="name"
                                                 name="name"
                                                 required
+                                                maxLength={100}
                                                 className="w-full px-4 py-3 bg-transparent border-b-2 border-[var(--border)] focus:border-[#00754B] outline-none transition-colors"
                                                 placeholder="Il tuo nome"
                                             />
@@ -128,6 +166,7 @@ export default function ContactPage() {
                                                 id="email"
                                                 name="email"
                                                 required
+                                                maxLength={150}
                                                 className="w-full px-4 py-3 bg-transparent border-b-2 border-[var(--border)] focus:border-[#00754B] outline-none transition-colors"
                                                 placeholder="email@esempio.com"
                                             />
@@ -232,6 +271,7 @@ export default function ContactPage() {
                                             name="message"
                                             required
                                             rows={5}
+                                            maxLength={2000}
                                             className="w-full px-4 py-3 bg-transparent border-2 border-[var(--border)] focus:border-[#00754B] outline-none transition-colors rounded-lg resize-none"
                                             placeholder={
                                                 contactType === 'production'
@@ -299,6 +339,8 @@ export default function ContactPage() {
                                     width="100%"
                                     height="100%"
                                     style={{ border: 0 }}
+                                    sandbox="allow-scripts allow-same-origin"
+                                    title="Mappa sede 3MonkeysFilm - Via dell'Olmata 33, Roma"
                                     allowFullScreen
                                     loading="lazy"
                                     referrerPolicy="no-referrer-when-downgrade"

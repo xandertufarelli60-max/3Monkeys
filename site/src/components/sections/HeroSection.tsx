@@ -16,7 +16,7 @@ export default function HeroSection({
     videoSrc = '/showreel.mp4',
     posterSrc = '/poster.jpg',
     headline = 'Crafting Visual Stories',
-    subheadline = 'Production Company & Service Tecnico',
+    subheadline = '',
 }: HeroSectionProps) {
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -44,8 +44,8 @@ export default function HeroSection({
                 style={{ opacity, scale }}
             >
                 <Image
-                    src="/images/home-hero-mountains.jpg"
-                    alt="3Monkeys Operators in Mountains"
+                    src="/images/hero-main.jpeg"
+                    alt="3Monkeys Film - Steadicam operator sulle Dolomiti"
                     fill
                     className="object-cover"
                     priority
@@ -91,14 +91,16 @@ export default function HeroSection({
                 </motion.h1>
 
                 {/* Subheadline - Pantone Accent */}
-                <motion.p
-                    className="mono text-sm text-[#00754B] mt-6 max-w-lg tracking-[0.15em] uppercase"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 1 }}
-                >
-                    {subheadline}
-                </motion.p>
+                {subheadline && (
+                    <motion.p
+                        className="mono text-sm text-[#00754B] mt-6 max-w-lg tracking-[0.15em] uppercase"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 1 }}
+                    >
+                        {subheadline}
+                    </motion.p>
+                )}
 
                 {/* Dual CTA Buttons */}
                 <motion.div

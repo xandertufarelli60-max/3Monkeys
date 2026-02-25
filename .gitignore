@@ -2,3 +2,20 @@ video utilizzabili/
 Materiale 3monkeys/
 .DS_Store
 workspaces/
+
+# Materiale grezzo / asset sorgente (non necessari per la build)
+3_Monkeys_logo_vari_formati_declinazioni_colore/
+Foto Sala Pose/
+Immagini_utilizzabili_foto/
+Loghi partner 3Monkeys/
+Testi sezioni sito/
+
+# File di documentazione legacy
+objects.txt
+Requisiti Sito Web.pdf
+VERIFICA_PROGETTO_3MONKEYS.md
+fix.md
+project-status.md
+
+# Antigravity / AI agent artifacts
+.nexus/

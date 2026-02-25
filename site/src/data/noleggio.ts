@@ -12,6 +12,10 @@ export const noleggioHero = {
 export const salaPoseImages = [
     { src: "/images/noleggio/sala-pose-1.jpg", alt: "Sala pose 3Monkeys - Vista 1" },
     { src: "/images/noleggio/sala-pose-2.jpg", alt: "Sala pose 3Monkeys - Vista 2" },
+    { src: "/images/noleggio/sala-pose-3.jpeg", alt: "Sala pose 3Monkeys - Vista 3" },
+    { src: "/images/noleggio/sala-pose-8.jpeg", alt: "Sala pose 3Monkeys - Vista 4" },
+    { src: "/images/noleggio/sala-pose-9.png", alt: "Sala pose 3Monkeys - Vista 5" },
+    { src: "/images/noleggio/sala-pose-10.png", alt: "Sala pose 3Monkeys - Vista 6" },
 ];
 
 export const salaPoseFeatures = [

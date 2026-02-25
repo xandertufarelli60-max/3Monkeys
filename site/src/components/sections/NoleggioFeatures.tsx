@@ -49,7 +49,9 @@ export default function NoleggioFeatures() {
                                 transition={{ duration: 0.6, delay: 0.1 * index }}
                             >
                                 <Icon className="w-8 h-8 mb-4 text-[var(--muted)] group-hover:text-[#00754B] transition-colors" />
-                                <h3 className="text-xl font-bold mt-3">{feature.title}</h3>
+                                <h3 className="text-base sm:text-lg lg:text-xl font-bold mt-3 break-words hyphens-auto leading-tight">
+                                    {feature.title}
+                                </h3>
                                 <p className="text-[var(--muted)] text-sm mt-3 leading-relaxed">
                                     {feature.description}
                                 </p>

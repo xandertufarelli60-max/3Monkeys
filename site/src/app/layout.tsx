@@ -8,8 +8,7 @@ import SmoothScroll from "@/components/ui/SmoothScroll";
 import ShutterTransition from "@/components/ui/ShutterTransition";
 import SplashScreen from "@/components/ui/SplashScreen";
 import Header from "@/components/layout/Header";
-import KitSidebar from "@/components/layout/KitSidebar";
-import { KitProvider } from "@/lib/KitContext";
+
 
 // Font — unified to Space Mono
 const spaceMono = Space_Mono({
@@ -75,18 +74,15 @@ export default function RootLayout({
         className={`${spaceMono.variable} antialiased cursor-custom film-grain`}
         suppressHydrationWarning={true}
       >
-        <KitProvider>
-          <SplashScreen>
-            <SmoothScroll>
-              <CursorFollower />
-              <Header />
-              <ShutterTransition>
-                <main>{children}</main>
-              </ShutterTransition>
-              <KitSidebar />
-            </SmoothScroll>
-          </SplashScreen>
-        </KitProvider>
+        <SplashScreen>
+          <SmoothScroll>
+            <CursorFollower />
+            <Header />
+            <ShutterTransition>
+              <main>{children}</main>
+            </ShutterTransition>
+          </SmoothScroll>
+        </SplashScreen>
       </body>
     </html>
   );
