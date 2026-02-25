@@ -312,7 +312,7 @@ export default function Home() {
               {/* Social Links */}
               <div className="flex gap-4 mt-6">
                 <a
-                  href="https://www.instagram.com/3monkeys_film?igsh=MWZ0dXFmb3h6dTlkZA%3D%3D"
+                  href="https://www.instagram.com/3monkeys_film?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
