@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Linkedin, Film, Mail } from 'lucide-react';
+import { Film, Mail } from 'lucide-react';
 
 interface TeamMember {
     id: string;
@@ -12,7 +12,6 @@ interface TeamMember {
     image: string;
     objectPosition?: string;
     links: {
-        linkedin?: string;
         imdb?: string;
         email?: string;
     };
@@ -121,17 +120,6 @@ export default function StudioPage() {
 
                                     {/* Social Links */}
                                     <div className="flex items-center gap-3 mt-4">
-                                        {member.links.linkedin && (
-                                            <a
-                                                href={member.links.linkedin}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="p-2 rounded-full border border-[var(--border)] hover:border-[#00754B] hover:text-[#00754B] transition-colors"
-                                                aria-label={`LinkedIn di ${member.name}`}
-                                            >
-                                                <Linkedin className="w-4 h-4" />
-                                            </a>
-                                        )}
                                         {member.links.imdb && (
                                             <a
                                                 href={member.links.imdb}

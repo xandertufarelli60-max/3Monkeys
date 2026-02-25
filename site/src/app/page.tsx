@@ -274,7 +274,7 @@ export default function Home() {
         <div className="max-w-3xl mx-auto text-center reveal reveal-slideup">
           <span className="mono text-xs text-[#00754B] tracking-widest">INIZIAMO</span>
           <h2 className="mt-4">
-            Pronti a raccontare<br />la vostra storia?
+            Vuoi raccontare<br />la tua storia?
           </h2>
           <p className="text-[var(--muted)] mt-6 max-w-lg mx-auto">
             Dal concept alla consegna finale, gestiamo ogni fase della produzione.
@@ -311,16 +311,15 @@ export default function Home() {
               </p>
               {/* Social Links */}
               <div className="flex gap-4 mt-6">
-                {["Instagram", "LinkedIn", "Vimeo"].map((social) => (
-                  <a
-                    key={social}
-                    href="#"
-                    aria-label={social}
-                    className="mono text-xs text-[#888] hover:text-[#00754B] transition-colors"
-                  >
-                    {social}
-                  </a>
-                ))}
+                <a
+                  href="https://www.instagram.com/3monkeys_film?igsh=MWZ0dXFmb3h6dTlkZA%3D%3D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="mono text-xs text-[#888] hover:text-[#00754B] transition-colors"
+                >
+                  Instagram
+                </a>
               </div>
             </div>
 
