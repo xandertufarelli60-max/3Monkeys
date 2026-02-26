@@ -346,8 +346,8 @@ export default function Home() {
               <h4 className="mono text-xs text-[#00754B] mb-4 tracking-widest">CONTATTI</h4>
               <ul className="space-y-2 text-sm text-[#888]">
                 <li>
-                  <a href="mailto:3monkeysfilm@gmail.com" className="hover:text-white transition-colors">
-                    3monkeysfilm@gmail.com
+                  <a href="mailto:info@3monkeysfilm.it" className="hover:text-white transition-colors">
+                    info@3monkeysfilm.it
                   </a>
                 </li>
                 <li>

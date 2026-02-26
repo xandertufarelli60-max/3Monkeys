@@ -15,7 +15,7 @@ export default function ContactPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const CONTACT_EMAIL = '3monkeysfilm@gmail.com';
+    const CONTACT_EMAIL = 'info@3monkeysfilm.it';
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -321,8 +321,8 @@ export default function ContactPage() {
                                     </div>
                                     <div className="flex items-center gap-4">
                                         <Mail className="w-5 h-5 text-[#00754B]" />
-                                        <a href="mailto:3monkeysfilm@gmail.com" className="hover:text-[#00754B] transition-colors">
-                                            3monkeysfilm@gmail.com
+                                        <a href="mailto:info@3monkeysfilm.it" className="hover:text-[#00754B] transition-colors">
+                                            info@3monkeysfilm.it
                                         </a>
                                     </div>
                                     <div className="flex items-center gap-4">

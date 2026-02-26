@@ -57,7 +57,7 @@ export default function NoleggioBooking() {
 
                             const subject = `Richiesta Noleggio - ${name}`;
                             const body = `Nome: ${name}\nEmail: ${email}\nTelefono: ${phone}\nTipo Progetto: ${projectType}\nData Prevista: ${date}\n\nMessaggio:\n${message}`;
-                            const mailtoUrl = `mailto:3monkeysfilm@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                            const mailtoUrl = `mailto:info@3monkeysfilm.it?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
                             window.location.href = mailtoUrl;
                         }}>
                             {/* Honeypot anti-spam field */}
@@ -162,11 +162,11 @@ export default function NoleggioBooking() {
                         <div className="bg-[#050505] arsenal-mode rounded-lg p-8">
                             <h3 className="text-white font-bold text-lg mb-6">Contatti Diretti</h3>
                             <div className="space-y-4">
-                                <a href="mailto:3monkeysfilm@gmail.com" className="flex items-center gap-4 text-[#888] hover:text-[#00754B] transition-colors group">
+                                <a href="mailto:info@3monkeysfilm.it" className="flex items-center gap-4 text-[#888] hover:text-[#00754B] transition-colors group">
                                     <div className="w-10 h-10 rounded-lg bg-[#1A1A1A] flex items-center justify-center group-hover:bg-[#00754B]/20 transition-colors">
                                         <Mail className="w-5 h-5 text-[#00754B]" />
                                     </div>
-                                    <span className="mono text-sm">3monkeysfilm@gmail.com</span>
+                                    <span className="mono text-sm">info@3monkeysfilm.it</span>
                                 </a>
                                 <a href="tel:+390212345678" className="flex items-center gap-4 text-[#888] hover:text-[#00754B] transition-colors group">
                                     <div className="w-10 h-10 rounded-lg bg-[#1A1A1A] flex items-center justify-center group-hover:bg-[#00754B]/20 transition-colors">
