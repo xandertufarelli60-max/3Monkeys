@@ -186,7 +186,7 @@ export default function Home() {
           <div className="text-center mb-16 reveal">
             <span className="mono text-xs text-[#00754B] tracking-widest">NOLEGGIO</span>
             <h2 className="mt-4 text-white" style={{ textShadow: "0 0 40px rgba(0,117,75,0.3)" }}>
-              Studio e Noleggio Materiale
+              Studio Rx e Noleggio Materiale
             </h2>
 
           </div>

@@ -2,7 +2,7 @@
 // Source: "Sezione Noleggio Sala Posa, Location e Attrezzatura Tecnica.docx"
 
 export const noleggioHero = {
-    title: "Studio e Noleggio materiale",
+    title: "Studio Rx e Noleggio materiale",
     subtitle: "",
     ctaPrimary: { text: "Prenota Ora", href: "/contact?type=noleggio" },
     ctaSecondary: { text: "Scopri i materiali", href: "#attrezzatura" },

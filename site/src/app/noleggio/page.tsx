@@ -6,7 +6,7 @@ import NoleggioBooking from '@/components/sections/NoleggioBooking';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Studio e Noleggio materiale | 3MonkeysFilm',
+    title: 'Studio Rx e Noleggio materiale | 3MonkeysFilm',
     description:
         'Noleggio location ideale per interviste, documentari, podcast, casting professionale e attrezzatura tecnica per produzioni video, fotografia e campagne pubblicitarie. Camera, luci, grip, audio. Roma - Milano.',
     keywords: [
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
         '3Monkeys Film',
     ],
     openGraph: {
-        title: 'Studio e Noleggio materiale | 3MonkeysFilm',
+        title: 'Studio Rx e Noleggio materiale | 3MonkeysFilm',
         description:
             'Spazio professionale e attrezzatura tecnica di alto livello per ogni esigenza di produzione.',
         type: 'website',
