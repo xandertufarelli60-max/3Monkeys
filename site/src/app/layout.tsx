@@ -20,6 +20,7 @@ const spaceMono = Space_Mono({
 
 // Metadata
 export const metadata: Metadata = {
+  metadataBase: new URL("https://3monkeysfilm.it"),
   title: "3MonkeysFilm | Production Excellence from Italy",
   description:
     "Casa di produzione cinematografica e service video premium. Noleggio attrezzature professionali ARRI, RED, Cooke. Roma - Milano.",

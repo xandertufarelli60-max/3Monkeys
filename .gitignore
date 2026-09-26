@@ -19,3 +19,8 @@ project-status.md
 
 # Antigravity / AI agent artifacts
 .nexus/
+
+# Large raw media files
+*.mp4
+!site/public/*.mp4
+.pnpm-store/

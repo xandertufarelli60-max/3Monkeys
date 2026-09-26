@@ -6,10 +6,10 @@ import { ArrowDown, Play, Camera } from 'lucide-react';
 import Image from 'next/image';
 
 interface HeroSectionProps {
-    videoSrc?: string;
-    posterSrc?: string;
-    headline?: string;
-    subheadline?: string;
+    readonly videoSrc?: string;
+    readonly posterSrc?: string;
+    readonly headline?: string;
+    readonly subheadline?: string;
 }
 
 export default function HeroSection({
@@ -17,7 +17,7 @@ export default function HeroSection({
     posterSrc = '/poster.jpg',
     headline = 'Crafting Visual Stories',
     subheadline = '',
-}: HeroSectionProps) {
+}: Readonly<HeroSectionProps>) {
     const containerRef = useRef<HTMLDivElement>(null);
 
     const { scrollYProgress } = useScroll({

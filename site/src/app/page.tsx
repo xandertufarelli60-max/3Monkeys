@@ -1,5 +1,6 @@
 import HeroSection from "@/components/sections/HeroSection";
 import PartnersSection from "@/components/sections/PartnersSection";
+import ShowreelSection from "@/components/sections/ShowreelSection";
 import FAQSection from "@/components/sections/FAQSection";
 import FooterNewsletter from "@/components/sections/FooterNewsletter";
 import {
@@ -62,8 +63,8 @@ export default function Home() {
       {/* Partner Trust Bar */}
       <PartnersSection />
 
-
-
+      {/* Showreel Video Showcase */}
+      <ShowreelSection />
 
       {/* Services Section */}
       <section className="py-24 px-6">
@@ -77,9 +78,9 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 reveal reveal-stagger">
-            {services.map((service, i) => (
+            {services.map((service) => (
               <a
-                key={i}
+                key={service.title}
                 href={service.href}
                 className={`group p-8 rounded-lg transition-all duration-500 card-tv-hover cursor-pointer block ${service.highlight
                   ? "service-highlight"
@@ -116,7 +117,7 @@ export default function Home() {
               href="/produzioni"
               className="mono text-xs hover:text-[#00754B] transition-colors group flex items-center gap-2"
             >
-              Tutte le Produzioni
+              Tutte le Produzioni{' '}
               <span className="group-hover:translate-x-1 transition-transform">→</span>
             </a>
           </div>
@@ -193,9 +194,9 @@ export default function Home() {
 
           {/* Noleggio Features Grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 reveal">
-            {noleggioFeatures.map((item, i) => (
+            {noleggioFeatures.map((item) => (
               <div
-                key={i}
+                key={item.name}
                 className="group relative aspect-square bg-[#0A0A0A] rounded-lg overflow-hidden dark-glow cursor-pointer flex flex-col items-center justify-center p-4"
                 data-cursor="info"
               >
@@ -212,7 +213,7 @@ export default function Home() {
               href="/noleggio"
               className="inline-flex items-center gap-2 px-8 py-4 border-2 border-[#00754B] text-[#00754B] mono text-xs uppercase tracking-widest hover:bg-[#00754B] hover:text-white transition-all duration-300"
             >
-              Esplora gli Spazi
+              Esplora gli Spazi{' '}
               <span>→</span>
             </a>
           </div>
@@ -246,8 +247,8 @@ export default function Home() {
                 { name: "Marco", role: "Drone", image: "/images/team/Marco-demartino-2.jpeg", objectPosition: "75% center" },
                 { name: "Massimo", role: "Drone", image: "/images/team/massimo-ruggini.jpg", objectPosition: "center" },
                 { name: "Tiziano", role: "Head Tech", image: "/images/team/tiziano.jpg", objectPosition: "center" },
-              ].map((member, i) => (
-                <div key={i} className="text-center group">
+              ].map((member) => (
+                <div key={member.name} className="text-center group">
                   <div className="relative w-20 h-20 rounded-full overflow-hidden mb-3 group-hover:ring-2 ring-[#00754B] ring-offset-2 transition-all">
                     <Image
                       src={member.image}
@@ -329,7 +330,8 @@ export default function Home() {
               <ul className="space-y-2">
                 {[
                   { name: "Produzione", href: "/produzioni" },
-                  { name: "Studio", href: "/studio" },
+                  { name: "Chi siamo", href: "/studio" },
+                  { name: "Noleggio", href: "/noleggio" },
                   { name: "Contatti", href: "/contact" },
                 ].map((item) => (
                   <li key={item.name}>
