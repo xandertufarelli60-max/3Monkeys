@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Volume2, VolumeX, Play, Pause } from 'lucide-react';
 
@@ -43,6 +43,12 @@ export default function ShowreelSection({
         }
     };
 
+    // Assicura l'autoplay su dispositivi mobile che a volte ignorano l'attributo autoPlay
+    useEffect(() => {
+        desktopVideoRef.current?.play().catch(() => {});
+        mobileVideoRef.current?.play().catch(() => {});
+    }, []);
+
     return (
         <section className="relative w-full bg-[#050505] overflow-hidden border-b border-[var(--border)]">
             {/* ========================================================
@@ -61,11 +67,11 @@ export default function ShowreelSection({
                     className="w-full h-full object-cover cursor-pointer"
                 >
                     <source src={videoSrc} type="video/mp4" />
+                    <track kind="captions" srcLang="it" label="Italiano" />
                 </video>
 
                 {/* Subtle Cinematic Vignette */}
                 <div 
-                    onClick={togglePlay}
                     className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/60 via-transparent to-black/40" 
                 />
 
@@ -82,10 +88,7 @@ export default function ShowreelSection({
                 <div className="absolute top-6 left-6 md:left-10 z-10 flex items-center gap-3 pointer-events-none">
                     <span className="flex items-center gap-2 mono text-xs text-[#00754B] bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 tracking-widest uppercase">
                         <span className="w-2 h-2 rounded-full bg-[#00754B] animate-pulse" />
-                        3Monkeys Showreel
-                    </span>
-                    <span className="mono text-[10px] text-white/50 tracking-wider">
-                        4K UHD • 24FPS
+                        {' '}3Monkeys Showreel
                     </span>
                 </div>
 
@@ -150,11 +153,11 @@ export default function ShowreelSection({
                         className="w-full h-full object-cover cursor-pointer"
                     >
                         <source src={videoMobileSrc} type="video/mp4" />
+                        <track kind="captions" srcLang="it" label="Italiano" />
                     </video>
 
                     {/* Subtle Vignette */}
                     <div
-                        onClick={togglePlay}
                         className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/70 via-transparent to-black/30"
                     />
 
@@ -171,10 +174,7 @@ export default function ShowreelSection({
                     <div className="absolute top-4 left-4 z-10 flex items-center gap-2 pointer-events-none">
                         <span className="flex items-center gap-1.5 mono text-[10px] text-[#00754B] bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 tracking-widest uppercase">
                             <span className="w-1.5 h-1.5 rounded-full bg-[#00754B] animate-pulse" />
-                            Showreel
-                        </span>
-                        <span className="mono text-[9px] text-white/50 tracking-wider">
-                            9:16 Vertical HD
+                            {' '}Showreel
                         </span>
                     </div>
 
